@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsfonts,latexsym,graphicx}
+\usepackage{fullpage,color}
+%\usepackage{text}
+%\usepackage{algo}
+\usepackage{url,hyperref}
+\usepackage[linesnumbered,boxed,ruled,vlined]{algorithm2e}
+
+\pagestyle{empty}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{defn}[lemma]{Definition}
+\newtheorem{assumption}[lemma]{Assumption}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{prop}[lemma]{Proposition}
+\newtheorem{exercise}[lemma]{Exercise}
+\newtheorem{claim}[lemma]{Claim}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{prob}{Problem}
+\newtheorem{conjecture}{Conjecture}
+
+\newenvironment{note}[1]{\medskip\noindent \textbf{#1:}}%
+        {\medskip}
+
+\newenvironment{proof}{\vspace{-0.05in}\noindent{\bf Proof:}}%
+        {\hspace*{\fill}$\Box$\par}
+\newenvironment{proofsketch}{\noindent{\bf Proof Sketch.}}%
+        {\hspace*{\fill}$\Box$\par\vspace{4mm}}
+\newenvironment{proofof}[1]{\smallskip\noindent{\bf Proof of #1.}}%
+        {\hspace*{\fill}$\Box$\par}
+
+\newcommand{\etal}{{\em et al.}\ }
+\newcommand{\assign}{\leftarrow}
+\newcommand{\eps}{\epsilon}
+
+\newcommand{\opt}{\textrm{\sc OPT}}
+\newcommand{\script}[1]{\mathcal{#1}}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+
+
+\begin{document}
+
+\setlength{\fboxrule}{.5mm}\setlength{\fboxsep}{1.2mm}
+\newlength{\boxlength}\setlength{\boxlength}{\textwidth}
+\addtolength{\boxlength}{-4mm}
+\begin{center}\framebox{\parbox{\boxlength}{\bf
+IIIS 2014 Spring: ATCS - Selected Topics in Optimization \\
+Lecture date: ADD DATE, 2009\\
+Instructor: Jian Li   \hfill Scribe: YOUR NAME}}\end{center}
+\vspace{5mm}
+
+\section{Introduction}
+
+
+Cover's mind-blowing algorithm \cite{cover1973} works as follows.
+
+
+\begin{algorithm}[h]
+\caption{An Algorithm}
+\label{algo2}
+Initially, let $\mathcal{L} = 0$\;
+\While{$a>b$}{
+    \For{$m = 1,2,\ldots, s+1$}{
+        $\Theta=\Xi$\;
+    }
+   $\clubsuit\diamondsuit\heartsuit\spadesuit$\;
+    \If{$b<a$}{ 
+        Do nothing\;
+    }
+}%while
+{\bf Return} $\bigoplus$\;
+\cite{har2012weighted}
+\end{algorithm}
+\cite{Seidel}
+\bibliographystyle{plain}
+\bibliography{a.bib}
+%% To add references, uncomment the following two lines and
+%% add the relevant bibitems.
+
+\end{document} 
