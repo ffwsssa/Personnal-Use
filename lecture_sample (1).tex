@@ -4,6 +4,7 @@
 %\usepackage{text}
 %\usepackage{algo}
 \usepackage{url,hyperref}
+\usepackage{complexity}
 \usepackage[linesnumbered,boxed,ruled,vlined]{algorithm2e}
 
 \pagestyle{empty}
@@ -38,7 +39,6 @@
 
 \newcommand{\etal}{{\em et al.}\ }
 \newcommand{\assign}{\leftarrow}
-\newcommand{\eps}{\epsilon}
 
 \newcommand{\opt}{\textrm{\sc OPT}}
 \newcommand{\script}[1]{\mathcal{#1}}
@@ -57,10 +57,132 @@ Lecture date: ADD DATE, 2009\\
 Instructor: Jian Li   \hfill Scribe: YOUR NAME}}\end{center}
 \vspace{5mm}
 
-\section{Introduction}
+\section{Review}
+Recall the following definition about $\epsilon$-net:
+A range space $(X;R)$ is a pair consisting of an underlying universe X of objects, and a certain collection
+	R of subsets (ranges) of X. 
+Furthermore, we focus on those range spaces of finite  VC-dimension; namely, for any finite subset $P\subset X$, the number of distinct sets $r\cap P$,
+for $r\in R$, is $O(|P|^d)$, for some constant $d$ (which is upper bounded by the VC-dimension of $(X;R)$).
+
+Then Given a range space (X;R), a nite subset P  X, and a parameter 0 < " < 1, an "-net for P (and
+R) is a subset N  P with the property that any range r 2 R with jr \ Pj  "jPj contains an element
+of N. In other words, N is a hitting set for all the \heavy" ranges.
+
+By last lecture, we have known that for any $(X;R)$, finite subset $P\subset X$ and $\epsilon$, such
+	that $(X;R)$ has finite  VC-dimension $d$,
+	there is a $\epsilon$-net of size $O(\frac{d}{\epsilon}\log \frac{1}{\epsilon})$. 
+This can be done by a random
+	sample of $P$ of that size, which could be an $\epsilon$-net with constant probability by
+	double sampling tricks. 
+Furthermore, the size of $\epsilon$-net for general case is tight.
+
+\section{Construct a $\frac{1}{\epsilon}$-size $\epsilon$-net for halfspaces in $R^3$}
 
 
-Cover's mind-blowing algorithm \cite{cover1973} works as follows.
+One of the major questions in the theory of $\epsilon$-nets is whether we could have 
+	the $\epsilon$-net with a smaller size in normal (geometric) case, instead of considering the general case.
+More precisely, the question is whether the factor $\log \frac{1}{\epsilon}$
+	 in the upper bound on their size is really necessary.
+
+Here we show, the answer is yes for halfspaces in $R^3$. That is, 
+\begin{theorem}\cite{har2014epsilon}
+	Given a set $P$ of $n$ points in $R^3$ in general position, and a parameter $0 <  \epsilon<1$, there
+	exists an $\epsilon$-net for $(P;H)$ of size $O(\frac{1}{\epsilon})$, where $H$ is the family of all (closed) halfspaces
+	(bounded by planes).
+\end{theorem} 
+It is straightforward to see that the theorem implies the same result for halfplanes in the plane. 
+Further, based on projection of hyperboloid, the theorem also can imply that a similar result holds for disks in the plane. 
+
+
+\subsection{Construction}
+Without loss of generality, we only consider an $\epsilon$-net for lower halfspaces.
+
+A symmetric construction will yield an $\epsilon$-net for upper halfspaces, and the union of the two nets will be
+an "-net for all halfspaces. Let $H^-$ denote the set of all lower halfspaces.
+
+\newcommand{\F}{\mathcal{F}}
+Let $\beta<\frac {1} {22}$ and construct  a maximal collection $\F$ of lower halfspaces with the following properties 
+\begin{enumerate}
+	\item Each halfspace  $f\in \F$ contains between $\epsilon n$ and $2\epsilon n$ points.
+	\item For any pair of distinct halfspaces $h,g\in \F$ , we have $ |h\cap g\cap P |\leq \beta \epsilon n$.
+\end{enumerate}
+
+
+
+Then for each halfspace $h \in F$, we construct an $\frac{\beta}{2}$-net $N_h$ for  $(h \cap P;H^-)$, of size
+	$O(\frac{1}{\beta}\log \frac{1}{\beta})=O(1)$.
+Therefore, we could get the union $N=\bigcup_{h\in\F} N_h$, which is the desired $\epsilon$-net.
+
+\subsection{Proof}
+To show $N$ is the desired $\epsilon$-net, 
+	it is sufficient for us to prove two things: (1) $N$ is $\epsilon$-net; (2) $|\F|=O(\frac{1}{\epsilon})$. 
+
+First, it is easy to see that $N$ is an $\epsilon$-net.
+Without loss of generality, assume there exists $h\in R$ containing $\epsilon n$ points (otherwise, shift). 
+
+	
+For each h 2 F let h denote its bounding plane. By slightly perturbing these planes,
+without changing any of the subsets h \ P, for h 2 F, we may assume that the planes h are in general
+position. We claim that all the planes h appear on their upper envelope E. Indeed, suppose to the
+contrary that there exists h 2 F such that h lies fully below the envelope. Let v be the vertex of the
+envelope closest to h. Clearly, the union of the three halfspaces h1; h2; h3 2 F dening v cover h; that
+is, h  h1 [ h2 [ h3. Hence, for at least one index i 2 f1; 2; 3g, we have jh \ hi \ Pj  1
+3 jh \ Pj  1
+3"n,
+which contradicts property (b) if we choose  < 1=3.
+Put t = jFj, and consider E as a planar map, which has t faces. Dene the degree deg(f) of a face
+f of E, lying on some plane h, to be the number of planes g which appear on the 1-level of A(F)
+directly below f (see Figure 1 for an illustration). In general, each such plane g either meets @f or
+contributes a face to the 1-level which lies fully below f; the second case is impossible, though, for then
+g would not appear on the upper envelope. Hence, assuming general position, deg(f) is equal to the
+number of edges of f.
+4
+
+\cite{har2014epsilon}
+
+
+
+\section{Geometric set cover}
+
+Though the optimal set cover and hitting set
+problems are NP-hard, results from $\epsilon$-nets help to give good approximation bounds for these algorithms for
+simpler set systems that arise in a geometric context. 
+
+Meggido has proved the geometric set cover problem is \NP-hard in \cite{megiddo1984complexity}. (In some cases, hardness of approximation has been shown as well).
+
+\subsection{Unweigted version with $O(\log OPT)$ ratio}
+The work is done by Clarkson and Varadarajan \cite{clarkson2007improved} by the updating weight trick, 
+	which happens often in online learning field. 
+	
+\begin{algorithm}[h]
+	\caption{Hitting set Approx for Unweighted Set Cover}
+	\label{alg-set-cover-unweighted}
+	Initially, let $w{x} = 1,\forall x\in X$, and let $SOL=\emptyset$\;
+	\While{$SOL$ is a set cover}{
+		According to the weight, pick a random subset of $R$   of size $O(\frac{\delta^*}{\epsilon} \log \frac{\delta^*}{\epsilon})$\;
+		\If{$\exists p\in X$ is uncovered}
+		{
+			\If{$w(R_p)\leq \epsilon w(R)$}
+				{
+					$w(R_p)=2w(R_p)$\;
+				}
+		}
+	}%while
+	{\bf Return} $\bigoplus$\;
+
+\end{algorithm}
+\cite{har2012weighted}
+
+
+
+
+BTW, there is a related note \cite{GeometricSetCover} which writes the same proof in a different way form this note. 
+Readers may find more inspiring things from it.  
+
+
+\section{Solve LP with fixed number of variables -- Seidel Algorithm}
+
+
 
 
 \begin{algorithm}[h]
@@ -81,7 +203,7 @@ Initially, let $\mathcal{L} = 0$\;
 \end{algorithm}
 \cite{Seidel}
 \bibliographystyle{plain}
-\bibliography{a.bib}
+\bibliography{a}
 %% To add references, uncomment the following two lines and
 %% add the relevant bibitems.
 
