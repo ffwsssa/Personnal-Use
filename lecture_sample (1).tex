@@ -44,7 +44,7 @@
 \newcommand{\script}[1]{\mathcal{#1}}
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 \newcommand{\floor}[1]{\lfloor #1 \rfloor}
-
+\newtheorem{problem}{Problem}
 
 \begin{document}
 
@@ -57,7 +57,7 @@ Lecture date: ADD DATE, 2009\\
 Instructor: Jian Li   \hfill Scribe: YOUR NAME}}\end{center}
 \vspace{5mm}
 
-\section{Review}
+\section{Recap}
 Recall the following definition about $\epsilon$-net:
 A range space $(X;R)$ is a pair consisting of an underlying universe X of objects, and a certain collection
 	R of subsets (ranges) of X. 
@@ -169,28 +169,44 @@ n&\geq \sum_{f\in \F} (\text{$\sharp$ points contained in the pocket ($f$)})\\
 \end{align*}
 Thus we have $|\F|\leq \frac{4}{\epsilon}$, which concludes the proof. 
 
-
+\renewcommand{\R}{\mathcal{R}}
 
 \section{Geometric set cover}
 
-Though the optimal set cover and hitting set
-problems are NP-hard, results from $\epsilon$-nets help to give good approximation bounds for these algorithms for
-simpler set systems that arise in a geometric context. 
+\begin{problem}
+Given a rage space $(X,R)$ with bounded VC dimension, find the minimal subset 
+	of $R$ that cover all elements in $X$.
+\end{problem}	
 
-Meggido has proved the geometric set cover problem is \NP-hard in \cite{megiddo1984complexity}. 
-Moreover, it has been shown that the problem is NP-Hard to approximate to within a factor of $\Omega(\log n)$.
+First of all, the general version of this problem is NP-Hard (by Meggido in \cite{megiddo1984complexity}.)
+Moreover, greedy algorithm can approximately solve the problem within a $O(\log |X|)$ factor,
+	 while it has been shown that the problem is NP-Hard to approximate to within a factor of $\Omega(\log |X|)$. 
+Then, it raises a natural question whether we can do better on some specific but still useful cases?  
 
-However, we can take a subset of the problem where S has a bounded dual shattering dimension $\delta^*$.
+In the following, we can take a subset of the problem where S has a bounded \textit{dual shattering dimension} $\delta^*$,
+	and show we can reach a ratio $O(\log OPT)$ on such version, where $OPT$ is the optimal solution to the problem 
+	(i.e. the size of the range subset). 
+
+More precisely, we define the dual shattering dimension in the following procedure. 
+First of all, for a range space $(X,R)$, we define its dual space as $(R,X^*)$.
+Let $\R_p=\{r\in R| p\in r\}$, then $X^*=\{\R_p| p\in X\}$.
+Furthermore, the shatter dimension of a space  is the maximum number of sets that might be created by $S$
+	when restricted to subsets of size $m$. Formally,
+	$$\pi_S(m)=\max_{B\subset X, |B|=m} \big|R_{|B}\big|$$
+ 	
 
 
-\subsection{Unweigted version with $O(\log OPT)$ ratio}
-The work is done by Clarkson and Varadarajan \cite{clarkson2007improved} by the updating weight trick, 
-	which happens often in online learning field. 
+\subsection{Unweighted version with $O(\log OPT)$ ratio}
+The algorithm \ref{alg-set-cover-unweighted}, designed by Clarkson and Varadarajan \cite{clarkson2007improved}, could
+	solve the geometric set cover problem by multiplicative-weight methods, 
+	which happen in Adabost, convex program, online learning and Yao Xor Lemma (in Arora's survey). 
 	
+If we use above upper bound $\frac{1}{\epsilon} $ for $\epsilon$-net, we can replace the solution 
+	$$
 \begin{algorithm}[h]
 	\caption{Hitting set Approx for Unweighted Set Cover}
 	\label{alg-set-cover-unweighted}
-	Initially, let $w{x} = 1,\forall x\in X$, and let $SOL=\emptyset$\;
+	Initially, let $w(x) = 1,\forall x\in X$, and let $SOL=\emptyset$\;
 	\While{$SOL$ is a set cover}{
 		According to the weight, pick a random subset of $R$   of size $O(\frac{\delta^*}{\epsilon} \log \frac{\delta^*}{\epsilon})$\;
 		\If{$\exists p\in X$ is uncovered}
