@@ -64,9 +64,9 @@ A range space $(X;R)$ is a pair consisting of an underlying universe X of object
 Furthermore, we focus on those range spaces of finite  VC-dimension; namely, for any finite subset $P\subset X$, the number of distinct sets $r\cap P$,
 for $r\in R$, is $O(|P|^d)$, for some constant $d$ (which is upper bounded by the VC-dimension of $(X;R)$).
 
-Then Given a range space (X;R), a nite subset P  X, and a parameter 0 < " < 1, an "-net for P (and
-R) is a subset N  P with the property that any range r 2 R with jr \ Pj  "jPj contains an element
-of N. In other words, N is a hitting set for all the \heavy" ranges.
+Then given a range space $(X;R)$, a finite subset $P \subset X$, and a parameter $0 < \epsilon < 1$, an $\epsilon$-net for $P$ (and
+$R$) is a subset $N \subseteq P$ with the property that any range $r \in R$ with $|r\cap P|\geq \epsilon|P|$ contains an element
+of $N$. 
 
 By last lecture, we have known that for any $(X;R)$, finite subset $P\subset X$ and $\epsilon$, such
 	that $(X;R)$ has finite  VC-dimension $d$,
@@ -104,7 +104,7 @@ an "-net for all halfspaces. Let $H^-$ denote the set of all lower halfspaces.
 Let $\beta<\frac {1} {22}$ and construct  a maximal collection $\F$ of lower halfspaces with the following properties 
 \begin{enumerate}
 	\item Each halfspace  $f\in \F$ contains between $\epsilon n$ and $2\epsilon n$ points.
-	\item For any pair of distinct halfspaces $h,g\in \F$ , we have $ |h\cap g\cap P |\leq \beta \epsilon n$.
+	\item For any pair of distinct halfspaces $h,g\in \F$ , we have $ |h\cap g\cap P |< \beta \epsilon n$.
 \end{enumerate}
 
 
@@ -118,27 +118,56 @@ To show $N$ is the desired $\epsilon$-net,
 	it is sufficient for us to prove two things: (1) $N$ is $\epsilon$-net; (2) $|\F|=O(\frac{1}{\epsilon})$. 
 
 First, it is easy to see that $N$ is an $\epsilon$-net.
-Without loss of generality, assume there exists $h\in R$ containing $\epsilon n$ points (otherwise, shift). 
+Without loss of generality, we consider each $h\in R$ containing $\epsilon n$ points (otherwise, shift) and
+	all we need to prove is that $h$ must contain a point of $N$.
+If $h\in \F$, obviously, $ h$ must contain a point of $N_h$, that is, contain a point of $N$.
+If $h\not\in \F$, we know there must exist a $g\in \F$ such that $|h\cap g\cap P|\geq \beta \epsilon n$ (since $\F$ is a maximal subset). 
+Then $N_g$ must hit $h\cap g\cap P$, i.e. $N_g$ hits $h$. 
+Since $N_g$ is a $\frac{\beta}{2}$-net of $g$ and it hits every group of $\frac{\beta}{2}|g\cap P|= $ nodes in $g\cap P$. 
 
-	
-For each h 2 F let h denote its bounding plane. By slightly perturbing these planes,
-without changing any of the subsets h \ P, for h 2 F, we may assume that the planes h are in general
-position. We claim that all the planes h appear on their upper envelope E. Indeed, suppose to the
-contrary that there exists h 2 F such that h lies fully below the envelope. Let v be the vertex of the
-envelope closest to h. Clearly, the union of the three halfspaces h1; h2; h3 2 F dening v cover h; that
-is, h  h1 [ h2 [ h3. Hence, for at least one index i 2 f1; 2; 3g, we have jh \ hi \ Pj  1
-3 jh \ Pj  1
-3"n,
-which contradicts property (b) if we choose  < 1=3.
-Put t = jFj, and consider E as a planar map, which has t faces. Dene the degree deg(f) of a face
-f of E, lying on some plane h, to be the number of planes g which appear on the 1-level of A(F)
-directly below f (see Figure 1 for an illustration). In general, each such plane g either meets @f or
-contributes a face to the 1-level which lies fully below f; the second case is impossible, though, for then
-g would not appear on the upper envelope. Hence, assuming general position, deg(f) is equal to the
-number of edges of f.
-4
 
-\cite{har2014epsilon}
+
+Second, we prove $|\F|=O(\frac{1}{\epsilon})$. Notice that each hyperplane $h\in \F$ happens in upper envelop. 
+Otherwise, suppose to the contrary that there exists 
+	$h \in \F$ such that all bounding plane of $h$ lies fully below the envelope. 
+Let $v$ be the vertex of the
+	envelope closest to $h$. 
+Clearly, the union of the three halfspaces $a; b; c \in  \F$ defining $v$ cover $h$; that
+is, $h \subset a\cup b\cup c$. 
+Hence, we have, at least, one of $|a\cap h|$, $|b\cap h|$, $|c\cap h|$ is larger than $\frac{1}{3} \epsilon n\beta \epsilon n$.
+
+
+\begin{figure}[htbp]	
+		\centering
+		\label{g1}
+\includegraphics[scale=0.5]{pocket}
+\caption{The graph is cited from \cite{har2014epsilon}}
+\end{figure}
+
+
+Now  consider the envelop  as a planar map, which has $|\F|$ faces. 
+Define the degree $deg(f)$ as the number of edges of a face $f$. 
+Note that, assuming general position, $deg(f)$ is equal to the number of hyperplanes that can be seen from face $f$ (Like Fig. \ref{g1}).
+In general, each such plane $g$ seen from $f$ either meets the boundary of $f$ or
+	contributes a face to the fully below $f$.
+However the latter case is impossible, otherwise, 
+	$g$ would not appear on the upper envelope.
+ 
+Let $E$ be the number of edges in the envelop. 
+Then by Eular's formula and the fact that $3|\F|\leq 2E$  we have $\sum_{f\in\F} deg(f)\leq 3|\F|-6$. 
+Hence, there exist at least $\frac{|\F|}{2}$ faces that have at most $11$ edges, and denote $S^{\leq 11}$ 
+	as the set containing such faces. 
+
+For a face in the envelop, define the pocket of $f$ as the set of all halfspaces which contribute to the degree of $f$, i.e. Fig. \ref{g1}. 
+Then we have 
+\begin{align*}
+n&\geq \sum_{f\in \F} (\text{$\sharp$ points contained in the pocket ($f$)})\\
+&\geq \sum_{f\in S^{\leq 11}}(\text{$\sharp$ points contained in the pocket ($f$)})\\
+&\geq \sum_{f\in S^{\leq 11}}(\epsilon n- 11\beta \epsilon n)\\
+&\geq \big|S^{\leq 11}\big|\frac{1}{2}\epsilon n\\
+&\geq \frac{1}{4}|\F|\epsilon n
+\end{align*}
+Thus we have $|\F|\leq \frac{4}{\epsilon}$, which concludes the proof. 
 
 
 
@@ -148,7 +177,11 @@ Though the optimal set cover and hitting set
 problems are NP-hard, results from $\epsilon$-nets help to give good approximation bounds for these algorithms for
 simpler set systems that arise in a geometric context. 
 
-Meggido has proved the geometric set cover problem is \NP-hard in \cite{megiddo1984complexity}. (In some cases, hardness of approximation has been shown as well).
+Meggido has proved the geometric set cover problem is \NP-hard in \cite{megiddo1984complexity}. 
+Moreover, it has been shown that the problem is NP-Hard to approximate to within a factor of $\Omega(\log n)$.
+
+However, we can take a subset of the problem where S has a bounded dual shattering dimension $\delta^*$.
+
 
 \subsection{Unweigted version with $O(\log OPT)$ ratio}
 The work is done by Clarkson and Varadarajan \cite{clarkson2007improved} by the updating weight trick, 
