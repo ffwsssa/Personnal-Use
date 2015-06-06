@@ -1,0 +1,781 @@
+%\usepackage{ifthen, amssymb, amsmath}
+%
+% Iddo Tzameret (Sep 2014)        
+%               Note: the package contains an error: the 
+%                     macros for complexity classes or
+%                     circuit classes use \enusuremath{\textit{text, <math content>}}
+%                     which causes a latex error. 
+%               
+%               Solution: change the scope of the bracket:
+%                                            \ensuremath{\textit{text} <math content>}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% WRITTEN BY PHUONG NGUYEN
+%%%% UNIVERSITY OF TORONTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONVENTIONS FOR LABELLING
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Label the results, i.e., theorems, lemmas, propositions,
+%%  corollaries, claims, exercises, examples: start with "t:"
+%%  For example: label{t:V0conservative}
+%%
+%% Label the definitions, notations: start with "d:"
+%%
+%% Label the equations: start with "e:"
+%%
+%% Label chapters, sections, subsections: star with "s:"
+%%  For example: label{s:intro}
+%%
+%% Label the proofs: start with "p:"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%\newcommand{\ignore}[1]{}
+
+
+
+
+\newcommand{\True}{\ensuremath{\top}}
+\newcommand{\False}{\ensuremath{\bot}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SHORT-CUTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Vocabularies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Language of arithmetic
+\newcommand{\LA}[0]{\ensuremath{\mathcal{L}_A}}
+\newcommand{\LFACC}[0]{\ensuremath{\mathcal{L}_{\FACC}}}
+\newcommand{\LFACZ}[0]{\ensuremath{\mathcal{L}_{\FACZ}}}
+\newcommand{\LFACZm}[0]{\ensuremath{\mathcal{L}_{\FACZ(m)}}}
+\newcommand{\LDelCR}[0]{\ensuremath{\mathcal{L}_{\DelCR}}}
+\newcommand{\LFO}[0]{\ensuremath{\mathcal{L}_{\mathit{FO}}}}
+\newcommand{\LFTCZ}[0]{\ensuremath{\mathcal{L}_{\FTCZ}}}
+\newcommand{\LID}[0]{\ensuremath{\mathcal{L}_{\DelZ}}}
+\newcommand{\LNL}[0]{\ensuremath{\mathcal{L}_{\mathbf{NL}}}}
+\newcommand{\LP}[0]{\ensuremath{\mathcal{L}_{\mathbf{P}}}}
+\newcommand{\LSTwo}[0]{\ensuremath{\calL_{\mathbf{S}_2}}}
+\newcommand{\LTwoA}[0]{\ensuremath{\mathcal{L}^2_A}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Short-cuts to classes, theories, systems names
+%% by alphabetical order
+%% All the name should appear inside math environment
+%%
+%% Note: short-cuts using \def hates numbers ...
+%% So, Z for zero, One for one (obvious)
+%%
+%% Note: Should not mix axioms with predicates
+%% e.g.: NUMONES is an axiom (sans cript, mathsf),
+%%       while BIT is a predicate (mathit)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% for the prefix single-
+\newcommand{\sing}[0]{\ensuremath{\mathit{single}\text{-}}}
+
+\newcommand{\rbarz}[0]{\ensuremath{\overline{\mathbf{R}}^0}}
+\newcommand{\fc}[0]{\ensuremath{\mathbf{FC}}}
+
+\newcommand{\lpp}[0]{\ensuremath{\mathit{lpp}}}
+\newcommand{\ACC}[0]{\ensuremath{\mathbf{ACC}}}
+\newcommand{\ACZ}[0]{\ensuremath{\mathbf{AC}^0}}
+\newcommand{\AID}[0]{\ensuremath{\mathbf{AID}}}
+\newcommand{\ANCk}[0]{\ensuremath{A_{\NCk}}}
+\newcommand{\kCE}[0]{\ensuremath{k\mbox{-}\mathit{CE}}}
+\newcommand{\TA}[0]{\ensuremath{\mathbf{TA}}}
+\newcommand{\TACZtwo}[0]{\ensuremath{\mathbf{TAC}^0}(2)}
+\newcommand{\TACZsix}[0]{\ensuremath{\mathbf{TAC}^0}(6)}
+\newcommand{\TTCZ}[0]{\ensuremath{\mathbf{TTC}^0}}
+\newcommand{\CRAM}[0]{\ensuremath{\mathbf{CRAM}}}
+\newcommand{\DelCR}[0]{\ensuremath{\mathbf{\Delta}_1^b\mbox{-}\mathbf{CR}}}
+\newcommand{\DelIp}[0]{\ensuremath{\mathbf{\Delta}_i^p}}
+\newcommand{\DelOneb}[0]{\ensuremath{\mathbf{\Delta}_1^b}}
+\newcommand{\DelOneB}[0]{\ensuremath{\mathbf{\Delta}_1^B}}
+\newcommand{\DelOneOne}[0]{\ensuremath{\mathbf{\Delta}_1^1}}
+\newcommand{\DelZ}[0]{\ensuremath{\mathbf{\Delta}_0}}
+\newcommand{\DelZN}[0]{\ensuremath{\mathbf{\Delta}_0^{\N}}}
+\newcommand{\DelZp}[0]{\ensuremath{\mathbf{\Delta}_0^p}}
+\newcommand{\DSpace}[0]{\ensuremath{\mathbf{DSpace}}}
+\newcommand{\DTime}[0]{\ensuremath{\mathbf{DTime}}}
+\newcommand{\DTimeSpace}[0]{\ensuremath{\mathbf{DTimeSpace}}}
+%\newcommand{\EXP}[0]{\ensuremath{\mathbf{EXP}}}
+\newcommand{\FACC}[0]{\ensuremath{\mathbf{FACC}}}
+\newcommand{\FACZ}[0]{\ensuremath{\mathbf{FAC}^0}}
+\newcommand{\FL}[0]{\ensuremath{\mathbf{FL}}}
+\newcommand{\FLTH}[0]{\ensuremath{\mathbf{FLTH}}}
+\newcommand{\FNC}[0]{\ensuremath{\mathbf{FNC}}}
+\newcommand{\FNCk}[0]{\ensuremath{\mathbf{FNC}^k}}
+\newcommand{\FNCOne}[0]{\ensuremath{\mathbf{FNC}^1}}
+\newcommand{\FNCTwo}[0]{\ensuremath{\mathbf{FNC}^2}}
+\newcommand{\FNL}[0]{\ensuremath{\mathbf{FNL}}}
+\newcommand{\FSL}[0]{\ensuremath{\mathbf{FSL}}}
+\newcommand{\FO}[0]{\ensuremath{\mathbf{FO}}}
+\newcommand{\FOCount}[0]{\ensuremath{\mathbf{FO}(\mathit{COUNT})}}
+\newcommand{\FP}[0]{\ensuremath{\mathbf{FP}}}
+\newcommand{\FPSigIp}[0]{\ensuremath{\FP^{\mathbf{\Sigma}_{i}^p}}}
+\newcommand{\Frege}[0]{\ensuremath{\mathbf{Frege}}}
+\newcommand{\dFrege}[0]{\ensuremath{d{\mbox -}\mathbf{Frege}}}
+\newcommand{\eFrege}[0]{\ensuremath{\mathbf{eFrege}}}
+\newcommand{\EFrege}[0]{\ensuremath{\mathbf{eFrege}}}
+\newcommand{\ACZFrege}[0]{\ensuremath{\ACZ{\mbox -}\mathbf{Frege}}}
+\newcommand{\FTCZ}[0]{\ensuremath{\mathbf{FTC}^0}}
+\newcommand{\G}[0]{\ensuremath{\mathbf{G}}}
+\newcommand{\KPG}[0]{\ensuremath{\mathbf{KPG}}}
+\newcommand{\GL}[0]{\ensuremath{\mathbf{GL}}}
+\newcommand{\GLstar}[0]{\ensuremath{\mathbf{GL}^{\star}}}
+\newcommand{\GI}[0]{\ensuremath{\mathbf{G}_i}}
+\newcommand{\GIstar}[0]{\ensuremath{\mathbf{G}_i^{\star}}}
+\newcommand{\GIPlusOne}[0]{\ensuremath{\mathbf{G}_{i+1}}}
+\newcommand{\GIPlusOnestar}[0]{\ensuremath{\mathbf{G}_{i+1}^{\star}}}
+\newcommand{\GOne}[0]{\ensuremath{\mathbf{G}_1}}
+\newcommand{\GOnestar}[0]{\ensuremath{\mathbf{G}_1^{\star}}}
+\newcommand{\GOneStar}[0]{\ensuremath{\mathbf{G}_1^{\star}}}
+\newcommand{\Gi}[0]{\ensuremath{\mathbf{G}_i}}
+\newcommand{\GZ}[0]{\ensuremath{\mathbf{G}_0}}
+\newcommand{\GZstar}[0]{\ensuremath{\mathbf{G}_0^{\star}}}
+\newcommand{\GFTwo}[0]{\ensuremath{\mathbf{GF(2)}}}
+\newcommand{\gDelOneB}[0]{\ensuremath{\mathbf{g\Delta}_1^B}}
+\newcommand{\gPi}[0]{\ensuremath{\mathbf{g\Pi}}}
+\newcommand{\gPiIB}[0]{\ensuremath{\mathbf{g\Pi}_i^B}}
+\newcommand{\gPiOneB}[0]{\ensuremath{\mathbf{g\Pi}_1^B}}
+\newcommand{\gPiZB}[0]{\ensuremath{\mathbf{g\Pi}_0^B}}
+\newcommand{\gSig}[0]{\ensuremath{\mathbf{g\Sigma}}}
+\newcommand{\gSigIB}[0]{\ensuremath{\mathbf{g\Sigma}_i^B}}
+\newcommand{\gSigOneB}[0]{\ensuremath{\mathbf{g\Sigma}_1^B}}
+\newcommand{\gSigZB}[0]{\ensuremath{\mathbf{g\Sigma}_0^B}}
+\newcommand{\IDZ}[0]{\ensuremath{\mathbf{ID}_0}}
+\newcommand{\IDelZ}[0]{\ensuremath{\mathbf{I\Delta}_0}}
+\newcommand{\IDelZbar}[0]{\ensuremath{\overline{\mathbf{I\Delta}}_0}}
+%%\def\ID0{\ensuremath{\mathbf{I\Delta}_0}}
+\newcommand{\IOPEN}[0]{\ensuremath{\mathbf{IOPEN}}}
+\newcommand{\ISigOne}[0]{\ensuremath{\mathbf{I\Sigma}_1}}
+\newcommand{\ISigZOnebcount}[0]{\ensuremath{(\mathbf{I\Sigma}_0^{1,
+b})^{\mathit{count}}}}
+\newcommand{\ISLK}[0]{\ensuremath{\mathbf{I\Sigma}_1-\mathbf{LK}}}
+\newcommand{\ISOne}[0]{\ensuremath{\mathbf{I\Sigma}_1}}
+\renewcommand{\L}[0]{\ensuremath{\mathbf{L}}}
+%\newcommand{\LogSpace}[0]{\ensuremath{\mathbf{L}}}
+\newcommand{\ALogTime}[0]{\ensuremath{\mathbf{ALogTime}}}
+\newcommand{\LH}[0]{\ensuremath{\mathbf{LH}}}
+\newcommand{\LinTime}[0]{\ensuremath{\mathbf{LinTime}}}
+\newcommand{\LTH}[0]{\ensuremath{\mathbf{LTH}}}
+
+%% LK and LK^2 proofs
+\newcommand{\LK}[0]{\ensuremath{\mathbf{LK}}}
+\newcommand{\LKTwo}[0]{\ensuremath{\mathbf{LK}^2}}
+
+%% LK-T and LK^2 - T proofs, for some theory T like V^1 or V^0
+\newcommand{\LKT}[1]{\ensuremath{\mathbf{LK}\mbox{-}{#1}}}
+\newcommand{\LKwith}[1]{\ensuremath{\mathbf{LK}\mbox{-}{#1}}}
+\newcommand{\LKTwoT}[1]{\ensuremath{\mathbf{LK}^2\mbox{-}{#1}}}
+\newcommand{\LKTwowith}[1]{\ensuremath{\mathbf{LK}^2\mbox{-}{#1}}}
+\newcommand{\LKVOne}[0]{\ensuremath{\LKTwowith{\VOnetilde}}}
+\newcommand{\LKVZ}[0]{\ensuremath{\LKTwowith{\VZtilde}}}
+\newcommand{\LKPhi}[1]{\LKwith{\Phi}}
+\newcommand{\LKIND}[0]{\ensuremath{\LKTwo\mbox{$+$}\IND{}}}
+\newcommand{\NC}[0]{\ensuremath{\textit{\textbf{NC}}}}
+\newcommand{\NCk}[0]{\ensuremath{\textit{\textbf{NC}^k}}}
+% 12/9/2014: if the \textit is bracketed over the *math* part then issues an error!
+\newcommand{\NCOne}[0]{\ensuremath{\textit{\textbf{NC}}^1}}
+\newcommand{\NCTwo}[0]{\ensuremath{{\textit{\textbf{NC}}^2}}}
+\newcommand{\NL}[0]{\ensuremath{\textit{\textbf{NL}}}}
+\newcommand{\NLogSpace}[0]{\ensuremath{\textit{\textbf{NLogSpace}}}}
+\newcommand{\NLinTime}[0]{\ensuremath{\textit{\textbf{NLinTime}}}}
+\newcommand{\NP}[0]{\ensuremath{{\textit{\textbf{NP}}}}}
+\newcommand{\NSpace}[0]{\ensuremath{\textit{\textbf{NSpace}}}}
+\newcommand{\NTime}[0]{\ensuremath{\textit{\textbf{NTime}}}}
+\newcommand{\NTimeSpace}[0]{\ensuremath{\textit{\textbf{NTimeSpace}}}}
+\newcommand{\OPEN}[0]{\ensuremath{\textbf{OPEN}}}
+\newcommand{\PA}[0]{\ensuremath{\textit{\textbf{PA}}}}
+
+\newcommand{\bDel}[0]{\ensuremath{\mathbf{\Delta}}}
+\newcommand{\bPi}[0]{\ensuremath{\mathbf{\Pi}}}
+\newcommand{\bSig}[0]{\ensuremath{\mathbf{\Sigma}}}
+
+\newcommand{\PiIb}[0]{\ensuremath{\mathbf{\Pi}_i^b}}
+\newcommand{\PiIB}[0]{\ensuremath{\mathbf{\Pi}_i^B}}
+\newcommand{\PiIPlusOne}[0]{\ensuremath{\mathbf{\Pi}_{i+1}}}
+\newcommand{\PiIPlusOneB}[0]{\ensuremath{\mathbf{\Pi}_{i+1}^B}}
+\newcommand{\PiIp}[0]{\ensuremath{\mathbf{\Pi}_{i}^p}}
+\newcommand{\PiIq}[0]{\ensuremath{\mathbf{\Pi}_i^q}}
+\newcommand{\PiOne}[0]{\ensuremath{\mathbf{\Pi}_1}}
+\newcommand{\PiOneb}[0]{\ensuremath{\mathbf{\Pi}_1^b}}
+\newcommand{\PiOneB}[0]{\ensuremath{\mathbf{\Pi}_1^B}}
+\newcommand{\PiTwoB}[0]{\ensuremath{\mathbf{\Pi}_2^B}}
+\newcommand{\PiOnep}[0]{\ensuremath{\mathbf{\Pi}_1^p}}
+\newcommand{\PiOneq}[0]{\ensuremath{\mathbf{\Pi}_1^q}}
+\newcommand{\PiZB}[0]{\ensuremath{\mathbf{\Pi}_0}^B}
+\newcommand{\PiZp}[0]{\ensuremath{\mathbf{\Pi}_0}^p}
+\newcommand{\PiZq}[0]{\ensuremath{\mathbf{\Pi}_0}^q}
+\newcommand{\PH}[0]{\ensuremath{\mathbf{PH}}}
+
+\newcommand{\bPK}[0]{\ensuremath{\mathbf{bPK}}}
+\newcommand{\ePK}[0]{\ensuremath{\mathbf{ePK}}}
+\newcommand{\PK}[0]{\ensuremath{\mathbf{PK}}}
+\newcommand{\PKM}[0]{\ensuremath{\mathbf{PKM}}}
+\newcommand{\PKPhi}[1]{\PKwith{\Phi}}
+\newcommand{\PKT}[1]{\ensuremath{\mathbf{PK}\mbox{-}{#1}}}
+\newcommand{\PKwith}[1]{\ensuremath{\mathbf{PK}\mbox{-}{#1}}}
+
+\newcommand{\PLS}[0]{\ensuremath{\mathbf{PLS}}}
+\newcommand{\Pspace}[0]{\ensuremath{\mathbf{PSPACE}}}
+%\newcommand{\PSPACE}[0]{\ensuremath{\mathbf{PSPACE}}}
+\newcommand{\Ptime}[0]{\ensuremath{\textit{\textbf{P}}}}
+\newcommand{\PV}[0]{\ensuremath{\mathbf{PV}}}
+\newcommand{\PSigIp}[0]{\ensuremath{\Ptime^{\mathbf{\Sigma}_{i}^p}}}
+
+\newcommand{\PTK}[0]{\ensuremath{\mathbf{PTK}}}
+\newcommand{\dPK}[0]{\ensuremath{d{\mbox-}\mathbf{PK}}}
+\newcommand{\dPKM}[0]{\ensuremath{d{\mbox-}\mathbf{PKM}}}
+\newcommand{\dPTK}[0]{\ensuremath{d{\mbox-}\mathbf{PTK}}}
+
+\newcommand{\SigIb}[0]{\ensuremath{\mathbf{\Sigma}_i^b}}
+\newcommand{\SigIB}[0]{\ensuremath{\mathbf{\Sigma}_i^B}}
+\newcommand{\SigIP}[0]{\ensuremath{\mathbf{\Sigma}_i^P}}
+\newcommand{\SigOneP}[0]{\ensuremath{\mathbf{\Sigma}_1^P}}
+\newcommand{\SigILin}[0]{\ensuremath{\mathbf{\Sigma}_{i}^{\mathit{lin}}}}
+\newcommand{\SigIp}[0]{\ensuremath{\mathbf{\Sigma}_{i}^p}}
+\newcommand{\SigIq}[0]{\ensuremath{\mathbf{\Sigma}_{i}^q}}
+\newcommand{\SigIPlusOne}[0]{\ensuremath{\mathbf{\Sigma}_{i+1}}}
+\newcommand{\SigIPlusOneB}[0]{\ensuremath{\mathbf{\Sigma}_{i+1}^B}}
+\newcommand{\SigIPlusOneLin}[0]{\ensuremath{\mathbf{\Sigma}_{i+1}^{\mathit{lin}}}}
+\newcommand{\SigIPlusOnep}[0]{\ensuremath{\mathbf{\Sigma}_{i+1}^p}}
+\newcommand{\SigOne}[0]{\ensuremath{\mathbf{\Sigma}_1}}
+\newcommand{\SigOneb}[0]{\ensuremath{\mathbf{\Sigma}_1^b}}
+\newcommand{\SigOneB}[0]{\ensuremath{\mathbf{\Sigma}_1^B}}
+\newcommand{\SigTwoB}[0]{\ensuremath{\mathbf{\Sigma}_2^B}}
+\newcommand{\SigOnep}[0]{\ensuremath{\mathbf{\Sigma}_1^p}}
+\newcommand{\SigOneq}[0]{\ensuremath{\mathbf{\Sigma}_1^q}}
+\newcommand{\SigOneOne}[0]{\ensuremath{\mathbf{\Sigma}_1^1}}
+\newcommand{\SigOneOneb}[0]{\ensuremath{\mathbf{\Sigma}_1^{1,b}}}
+\newcommand{\SigZB}[0]{\ensuremath{\mathbf{\Sigma}_0^B}}
+\newcommand{\SigZBCount}[0]{\ensuremath{\mathbf{\Sigma}_0^{B, \mathit{COUNT}}}}
+\newcommand{\SigZBModm}[0]{\ensuremath{\mathbf{\Sigma}_0^{B, \Mod_m}}}
+\newcommand{\SigZBTh}[0]{\ensuremath{\mathbf{\Sigma}_0^{B, \mathit{Th}}}}
+\newcommand{\SigZBTreeRec}[0]{\ensuremath{\mathbf{\Sigma}_0^B\mbox{-}\mathit{TreeRec}}}
+\newcommand{\SigZLin}[0]{\ensuremath{\mathbf{\Sigma}_0^{\mathit{lin}}}}
+\newcommand{\SigZp}[0]{\ensuremath{\mathbf{\Sigma}_0^p}}
+\newcommand{\SigZq}[0]{\ensuremath{\mathbf{\Sigma}_0^q}}
+\newcommand{\SL}[0]{\ensuremath{\mathbf{SL}}}
+\newcommand{\SLog}[0]{\ensuremath{\mathbf{S}^{\mathit{Log}}}}
+\newcommand{\SNLog}[0]{\ensuremath{\mathbf{S}^{\mathit{NLog}}}}
+\newcommand{\SITwo}[0]{\ensuremath{\mathbf{S}_2^i}}
+\newcommand{\SIPlusOneTwo}[0]{\ensuremath{\mathbf{S}_2^{i+1}}}
+\newcommand{\SOneTwo}[0]{\ensuremath{\mathbf{S}_2^1}}
+\newcommand{\STwo}[0]{\ensuremath{\mathbf{S}_2}}
+\newcommand{\STwoTwo}[0]{\ensuremath{\mathbf{S}_2^2}}
+\newcommand{\SRec}[0]{\ensuremath{\mathbf{\Sigma}_0^B\mbox{-}\mathbf{Rec}}}
+\newcommand{\TCZ}[0]{\ensuremath{\mathitbf{TC}^0}}
+\newcommand{\TE}[0]{\ensuremath{\mathit{TE}}}
+\newcommand{\TTwo}[0]{\ensuremath{\mathbf{T}_2}}
+\newcommand{\TITwo}[0]{\ensuremath{\mathbf{T}_2^i}}
+\newcommand{\TOneTwo}[0]{\ensuremath{\mathbf{T}_2^1}}
+\newcommand{\TTwoTwo}[0]{\ensuremath{\mathbf{T}_2^2}}
+\newcommand{\TVI}[0]{\ensuremath{\mathbf{TV}^i}}
+\newcommand{\TVOne}[0]{\ensuremath{\mathbf{TV}^1}}
+\newcommand{\TVZ}[0]{\ensuremath{\mathbf{TV}^0}}
+%\newcommand{\V}[0]{\ensuremath{\mathbf{V}}}
+\newcommand{\VACC}[0]{\ensuremath{\mathbf{VACC}}}
+\newcommand{\VACCbar}[0]{\ensuremath{\overline{\mathbf{VACC}}}}
+\newcommand{\VHorn}[0]{\ensuremath{\mathbf{V}^1\mbox{-}\mathbf{HORN}}}
+%\newcommand{\VI}[0]{\ensuremath{\mathbf{V}^i}}
+\newcommand{\VIPlusOne}[0]{\ensuremath{\mathbf{V}^{i+1}}}
+\newcommand{\VKrom}[0]{\ensuremath{\mathbf{V}^1\mbox{-}\mathbf{KROM}}}
+\newcommand{\VSymKrom}[0]{\ensuremath{\mathbf{V}^1\mbox{-}\mathbf{SymKROM}}}
+\newcommand{\VL}[0]{\ensuremath{\mathbf{VL}}}
+\newcommand{\VNC}[0]{\ensuremath{\mathbf{VNC}}}
+\newcommand{\VNCk}[0]{\ensuremath{\mathbf{VNC}^k}}
+\newcommand{\VNCOne}[0]{\ensuremath{\mathbf{VNC}^1}}
+\newcommand{\VNCTwo}[0]{\ensuremath{\mathbf{VNC}^2}}
+\newcommand{\VNL}[0]{\ensuremath{\mathbf{VNL}}}
+\newcommand{\VNLbar}[0]{\ensuremath{\overline{\mathbf{VNL}}}}
+\newcommand{\VOne}[0]{\ensuremath{\mathbf{V}^1}}
+\newcommand{\VOneRow}[0]{\ensuremath{\VOne(\Row)}}
+\newcommand{\VOnetilde}[0]{\ensuremath{\tilde{\mathbf{V}}^1}}
+\newcommand{\VSL}[0]{\ensuremath{\mathbf{VSL}}}
+\newcommand{\VP}[0]{\ensuremath{\mathbf{VP}}}
+\newcommand{\VPbar}[0]{\ensuremath{\overline{\mathbf{VP}}}}
+\newcommand{\VPV}[0]{\ensuremath{\mathbf{VPV}}}
+\newcommand{\VTCZ}[0]{\ensuremath{\mathitbf{VTC}^0}}
+\newcommand{\VTCZbar}[0]{\ensuremath{\overline{\mathbf{VTC}}^0}}
+\newcommand{\VTCZtilde}[0]{\ensuremath{\tilde{\mathbf{VTC}}^0}}
+\newcommand{\VTwo}[0]{\ensuremath{\mathbf{V}^2}}
+\newcommand{\VZ}[0]{\ensuremath{\mathbf{V}^0}}
+\newcommand{\VZRow}[0]{\ensuremath{\VZ(\Row)}}
+\newcommand{\VZbar}[0]{\ensuremath{\overline{\mathbf{V}}^0}}
+\newcommand{\VZtilde}[0]{\ensuremath{\widetilde{\mathbf{V}}^0}}
+\newcommand{\UOneOne}[0]{\ensuremath{\mathbf{U}^1_1}}
+
+\newcommand{\co}[1]{\ensuremath{\mathit{co}\mbox{-}{#1}}}
+\newcommand{\coNP}[0]{\ensuremath{\textit{\textbf{coNP}}}}
+
+\newcommand{\LFC}[0]{\ensuremath{\mathcal{L}_\mathbf{FC}}}
+\newcommand{\FC}[0]{\ensuremath{\mathbf{FC}}}
+\newcommand{\VC}[0]{\ensuremath{\mathbf{VC}}}
+\newcommand{\VCbar}[0]{\ensuremath{\overline{\mathbf{VC}}}}
+\newcommand\Init[0]{\ensuremath{\mathit{Init}}}
+\newcommand\Next[0]{\ensuremath{\mathit{Next}}}
+\newcommand\Conf[0]{\ensuremath{\mathit{Conf}}}
+
+\newcommand\Select[0]{\ensuremath{\mathit{Select}}}
+
+%% Combinatoric principles
+
+\def\1GAP{\mathbf{1GAP}}
+\def\UGAP{\mathbf{UGAP}}
+\def\AGAP{\mathbf{AGAP}}
+\def\GAP{\mathbf{GAP}}
+\newcommand{\CVP}[0]{\ensuremath{\mathbf{CVP}}}
+\newcommand{\STCONN}[0]{\ensuremath{\mathbf{STCONN}}}
+\newcommand{\OneSTCONN}[0]{\ensuremath{\mathbf{1}\mbox{-}\mathbf{STCONN}}}
+\newcommand{\USTCONN}[0]{\ensuremath{\mathbf{USTCONN}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Names of the special relations, functions or axioms
+%%
+%% Functions names: math it (mathit)
+%%   String functions start with a capital, followed by lowercase.
+%%   Number functions: start with lower case.
+%% In case of adjoining words, subsequent words start with capital.
+%%
+%% Axiom names: bold face, capital (like \mathbf{NUMONES})
+%%
+%% Relation name: italic, all capital (like \mathit{BIT})
+%%
+%% NOTE: the unary predicate X in descriptive part is italic by default
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% axioms
+
+\newcommand{\OpenLIND}[0]{\ensuremath{\mathbf{Open}}-\ensuremath{\mathbf{LIND}}
+}
+
+
+%% Usage: either 0 argument: \BASIC{}
+%%  or 1 argument: e.g., \BASIC{2}.
+%% Can be put within $, $.
+
+\newcommand\AX[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{AX}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{AX}}}}%
+}
+
+\newcommand\BASIC[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{BASIC}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{BASIC}}}}%
+}
+
+\newcommand\BITREC[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{BIT}\mbox{-}\mathbf{REC}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{BIT}\mbox{-}\mathbf{REC}}}}%
+}
+
+\newcommand\COMP[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{COMP}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{COMP}}}}%
+}
+
+\newcommand\IND[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{IND}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{IND}}}}%
+}
+
+\newcommand\PIND[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{PIND}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{PIND}}}}%
+}
+
+%% e.g., \MIN{X}, \MIN{}
+\newcommand\MIN[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{MIN}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{MIN}}}}%
+}
+
+\newcommand\MAX[1]{%
+                                                                                                                                \ifthenelse{\equal{#1}{}}%
+                                                                                                                                {\ensuremath{\mathbf{MAX}}}%
+                                                                                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{MAX}}}}%
+}
+
+\newcommand\REPL[1]{%
+                                                                \ifthenelse{\equal{#1}{}}%
+                                                                {\ensuremath{\mathbf{REPL}}}%
+                                                                {\ensuremath{{#1}\mbox{-}{\mathbf{REPL}}}}%
+}
+
+%%\newcommand\prop[2]{%
+                                                                %%\ifthenelse{\equal{#2}{}}%
+                                                                %%{\ensuremath{\|{#1}\|}}%
+                                                                %%{\ensuremath{{#1}[{#2}]}}%
+%%}
+
+\newcommand\rleft[1]{\ensuremath{#1\mbox{-}\mathbf{left}}}
+\newcommand\rright[1]{\ensuremath{#1\mbox{-}\mathbf{right}}}
+\newcommand\rweak[1]{\ensuremath{#1\mbox{-}\mathbf{weakening}}}
+
+%% AX: defining axiom
+%\newcommand{\AX}[1]{\ensuremath{\mathrm{AX}(#1)}}
+\newcommand\AXIOM[0]{\ensuremath{\mathit{AXIOM}}}
+
+%% relations
+\newcommand{\ALC}[0]{\ensuremath{\mathit{ALC}}}
+\newcommand{\AXSEQ}[0]{\ensuremath{\mathit{AXSEQ}}}
+\newcommand{\Bit}[0]{\ensuremath{\mathit{Bit}}}
+\newcommand{\BIT}[0]{\ensuremath{\mathit{BIT}}}
+\newcommand{\FBIT}[0]{\ensuremath{\mathit{FBIT}}}
+\newcommand\CARRY[0]{\ensuremath{\mathit{CARRY}}}
+\newcommand\CEDENT[0]{\ensuremath{\mathit{CEDENT}}}
+\newcommand{\CONFIGS}[0]{\ensuremath{\mathit{CONFIGS}}}
+\newcommand{\FORM}[0]{\ensuremath{\mathit{FORM}}}
+\newcommand{\FORMand}[0]{\ensuremath{\mathit{FORM}^{\wedge}}}
+\newcommand{\FORMor}[0]{\ensuremath{\mathit{FORM}^{\vee}}}
+\newcommand{\FORMneg}[0]{\ensuremath{\mathit{FORM}^{\neg}}}
+\newcommand{\GRAPH}[0]{\ensuremath{\mathit{GRAPH}}}
+\newcommand{\IMMSUB}[0]{\ensuremath{\mathit{IMMSUB}}}
+\newcommand{\INFSEQ}[0]{\ensuremath{\mathit{INFSEQ}}}
+\newcommand{\INSTRUCTS}[0]{\ensuremath{\mathit{INSTRUCTS}}}
+\newcommand{\INIT}[0]{\ensuremath{\mathit{INIT}}}
+\newcommand{\LC}[0]{\ensuremath{\mathit{LC}}}
+\newcommand{\LISTFORM}[0]{\ensuremath{\mathit{LISTFORM}}}
+\newcommand{\LPD}[0]{\ensuremath{\mathit{LPD}}}
+\newcommand\MOD[0]{\ensuremath{\mathit{MOD}}}
+\newcommand\NEXT[0]{\ensuremath{\mathit{NEXT}}}
+\newcommand\NUMONES[0]{\ensuremath{\mathit{NUMONES}}}
+\newcommand{\OUT}[0]{\ensuremath{\mathit{OUT}}}
+\newcommand{\PARITY}[0]{\ensuremath{\mathit{PARITY}}}
+\newcommand{\PHP}[0]{\ensuremath{\mathit{PHP}}}
+\newcommand{\PHPn}[0]{\ensuremath{\mathit{PHP}^{n+1}_{n}}}
+\newcommand{\PLUS}[0]{\ensuremath{\mathit{PLUS}}}
+\newcommand{\PowTwo}[0]{\ensuremath{\mathit{Pow2}}}
+\newcommand{\PowFour}[0]{\ensuremath{\mathit{Pow4}}}
+\newcommand{\PPow}[0]{\ensuremath{\mathit{PPow2}}}
+\newcommand{\PRF}[0]{\ensuremath{\mathit{PRF}}}
+\newcommand{\Prime}[0]{\ensuremath{\mathit{Prime}}}
+\newcommand{\SEQ}[0]{\ensuremath{\mathit{SEQ}}}
+\newcommand{\SEQVAL}[0]{\ensuremath{\mathit{SEQVAL}}}
+\newcommand{\STEP}[0]{\ensuremath{\mathit{STEP}}}
+\newcommand{\Taut}[0]{\ensuremath{\mathit{TAUT}}}
+\newcommand{\TIMES}[0]{\ensuremath{\mathit{TIMES}}}
+\newcommand{\VAL}[0]{\ensuremath{\mathit{VAL}}}
+
+
+
+
+%% number functions
+%\newcommand{\bitSum}[0]{\ensuremath{\mathit{bitSum}}}
+%\newcommand{\depth}[0]{\ensuremath{\mathit{depth}}}
+%\newcommand{\estring}[0]{\ensuremath{\epsilon}}
+%\newcommand{\ext}[0]{\ensuremath{\mathit{ext}}}
+%\newcommand{\first}[0]{\ensuremath{\mathit{first}}}
+%\newcommand{\fLC}[0]{\ensuremath{f_\mathit{LC}}}
+%\newcommand{\fSE}[0]{\ensuremath{f_\mathbf{SE}}}
+%\newcommand{\val}[0]{\ensuremath{\mathit{val}}}
+%\newcommand{\firstForm}[0]{\ensuremath{\mathit{firstForm}}}
+%\newcommand{\fval}[0]{\ensuremath{\mathit{fval}}}
+%\newcommand{\gp}[0]{\ensuremath{\mathit{gp}}}
+%\newcommand{\gpp}[0]{\ensuremath{\mathit{gpp}}}
+%\newcommand{\lastSEQ}[0]{\ensuremath{\mathit{lastSEQ}}}
+%%\newcommand{\lcm}[0]{\ensuremath{\mathit{lcm}}}
+%\newcommand{\LenBit}[0]{\ensuremath{\mathit{LenBit}}}
+%\renewcommand{\max}[0]{\ensuremath{\mathit{max}}}
+%\newcommand{\modulo}[0]{\ensuremath{\mathit{mod}}}
+%\newcommand{\nconfs}[0]{\ensuremath{\mathit{nconfs}}}
+%\newcommand{\numforms}[0]{\ensuremath{\mathit{numforms}}}
+%\newcommand{\numones}[0]{\ensuremath{\mathit{numones}}}
+%\newcommand{\Numones}[0]{\ensuremath{\mathit{Numones}}}
+%\newcommand{\numsubs}[0]{\ensuremath{\mathit{numsubs}}}
+%\newcommand{\parity}[0]{\ensuremath{\mathit{parity}}}
+%\newcommand{\pd}[0]{\ensuremath{\mathit{pd}}}
+%\newcommand{\size}[0]{\ensuremath{\mathit{size}}}
+%\newcommand{\ssum}[0]{\ensuremath{\mathit{sum}}}
+%\newcommand{\sym}[0]{\ensuremath{\mathit{sym}}}
+%\newcommand{\spaceM}[0]{\ensuremath{\mathit{space}_{\sM}}}
+%\newcommand{\timeM}[0]{\ensuremath{\mathit{time}_{\sM}}}
+
+\newcommand{\totNumones}[0]{\ensuremath{\mathit{totNumones}}}
+
+
+%% string functions
+\newcommand{\Configs}[0]{\ensuremath{\mathit{Configs}}}
+\newcommand{\Cut}[0]{\ensuremath{\mathit{Cut}}}
+\newcommand{\Graph}[0]{\ensuremath{\mathit{Graph}}}
+
+\newcommand{\FCVP}[0]{\ensuremath{F_\mathit{CVP}}}
+\newcommand{\FAGAP}[0]{\ensuremath{F_\mathit{AGAP}}}
+
+\newcommand{\FSTCONN}[0]{\ensuremath{F_\mathit{STCONN}}}
+\newcommand{\FGAP}[0]{\ensuremath{F_\mathit{GAP}}}
+
+\newcommand{\Out}[0]{\ensuremath{\mathit{Out}}}
+
+
+%%string functions in VTC^0 paper
+\newcommand{\AddCols}[0]{\ensuremath{\mathit{AddCols}}}
+\newcommand{\Bin}[0]{\ensuremath{\mathit{Bin}}}
+\newcommand{\ToString}[0]{\ensuremath{\mathit{ToString}}}
+
+\newcommand{\Min}[0]{\ensuremath{\mathit{Min}}}
+
+%\newcommand{\Row}[0]{\ensuremath{\mathit{Row}}}
+\newcommand{\rowlength}[0]{\ensuremath{\mathit{Row}\mbox{-}\mathit{length}}}
+\newcommand{\Sum}[0]{\ensuremath{\mathit{Sum}}}
+
+\newcommand{\FiniteUnion}[0]{\ensuremath{\mathit{FiniteUnion}}}
+\newcommand{\Union}[0]{\ensuremath{\mathit{Union}}}
+
+%%
+\newcommand{\true}[0]{\ensuremath{\top}}
+\newcommand{\false}[0]{\ensuremath{\perp}}
+
+
+
+%% set constants 0, 1
+\newcommand{\setZ}[0]{\ensuremath{\mathbf{0}}}
+\newcommand{\setOne}[0]{\ensuremath{\mathbf{1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vectors and bars (should use only vec ?)
+%% cal
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\alphavec{\vec{\alpha}}
+\def\betavec{\vec{\beta}}
+\def\gammavec{\vec{\gamma}}
+\def\deltavec{\vec{\delta}}
+\def\avec{\vec{a}}
+\def\bvec{\vec{b}}
+\def\cvec{\vec{c}}
+\def\dvec{\vec{d}}
+\def\evec{\vec{e}}
+\def\fvec{\vec{f}}
+\def\kvec{\vec{k}}
+\def\mvec{\vec{m}}
+\def\nvec{\vec{n}}
+\def\pvec{\vec{p}}
+\def\rvec{\vec{r}}
+\def\svec{\vec{s}}
+\def\tvec{\vec{t}}
+\def\uvec{\vec{u}}
+\def\vvec{\vec{v}}
+\def\wvec{\vec{w}}
+\def\xvec{\vec{x}}
+\def\yvec{\vec{y}}
+\def\zvec{\vec{z}}
+
+\def\Fvec{\vec{F}}
+\def\Svec{\vec{S}}
+\def\Tvec{\vec{T}}
+\def\Wvec{\vec{W}}
+\def\Uvec{\vec{U}}
+\def\Vvec{\vec{V}}
+\def\Xvec{\vec{X}}
+\def\Yvec{\vec{Y}}
+\def\Zvec{\vec{Z}}
+\def\Qvec{\vec{Q}}
+
+\def\ab{\bar{a}}
+%\def\mb{\bar{m}}
+\def\nb{\bar{n}}
+\def\rb{\bar{r}}
+\def\ub{\bar{u}}
+\def\vb{\bar{v}}
+\def\wb{\bar{w}}
+\def\xb{\bar{x}}
+\def\yb{\bar{y}}
+\def\zb{\bar{z}}
+
+\def\Pb{\bar{P}}
+\def\Qb{\bar{Q}}
+\def\Rb{\bar{R}}
+\def\Xb{\bar{X}}
+\def\Yb{\bar{Y}}
+\def\Zb{\bar{Z}}
+
+\newcommand{\boldp}[0]{\ensuremath{\mathbf{p}}}
+\newcommand{\boldq}[0]{\ensuremath{\mathbf{q}}}
+\newcommand{\boldr}[0]{\ensuremath{\mathbf{r}}}
+\newcommand{\boldC}[0]{\ensuremath{\mathbf{C}}}
+\newcommand{\boldD}[0]{\ensuremath{\mathbf{D}}}
+\newcommand{\boldQ}[0]{\ensuremath{\mathbf{Q}}}
+\newcommand{\boldT}[0]{\ensuremath{\mathbf{T}}}
+
+\newcommand{\calL}[0]{\ensuremath{\mathcal{L}}}
+\newcommand{\calLinf}[0]{\ensuremath{\mathcal{L}_{\infty}}}
+\newcommand{\calLplus}[0]{\ensuremath{\mathcal{L}^+}}
+\newcommand{\calM}[0]{\ensuremath{\mathcal{M}}}
+\newcommand{\calN}[0]{\ensuremath{\mathcal{N}}}
+\newcommand{\calP}[0]{\ensuremath{\mathcal{P}}}
+\newcommand{\calS}[0]{\ensuremath{\mathcal{S}}}
+\newcommand{\calShat}[0]{\ensuremath{\hat{\mathcal{S}}}}
+\newcommand{\calT}[0]{\ensuremath{\mathcal{T}}}
+\newcommand{\calTinf}[0]{\ensuremath{\mathcal{T}_{\infty}}}
+\newcommand{\calTplus}[0]{\ensuremath{\mathcal{T}^+}}
+\newcommand{\calTbar}[0]{\ensuremath{\overline{\mathcal{T}}}}
+
+\newcommand{\bigO}[0]{\ensuremath{\mathcal{O}}}
+
+
+%% short-cut for bold faces
+\def\bS{\mathbf{S}}
+
+
+%% short-cuts for lengthy formulas:
+\newcommand{\phixY}[0]{\ensuremath{\phi(\xvec,\Yvec)}}
+\newcommand{\varphiaal}[0]{\ensuremath{\varphi(\avec,\alphavec)}}
+\newcommand{\varphixX}[0]{\ensuremath{\varphi(\xvec,\Xvec)}}
+\newcommand{\varphixY}[0]{\ensuremath{\varphi(\xvec,\Yvec)}}
+\newcommand{\falphat}[0]{\ensuremath{f_{\alpha, t}}}
+\newcommand{\fphit}[0]{\ensuremath{f_{\varphi, t}}}
+\newcommand{\Falphat}[0]{\ensuremath{F_{\alpha, t}}}
+\newcommand{\Fphit}[0]{\ensuremath{F_{\varphi, t}}}
+
+\newcommand{\Pij}[0]{\ensuremath{P_{i,j}}}
+\newcommand{\pij}[0]{\ensuremath{p_{i,j}}}
+
+\newcommand{\phiexp}[0]{\ensuremath{\varphi_{\mathit{exp}}}}
+\newcommand{\psiexp}[0]{\ensuremath{\psi_{\mathit{exp}}}}
+\newcommand{\Exp}[0]{\ensuremath{{\mathit{Exp}}}}
+\newcommand{\Carry}[0]{\ensuremath{{\mathit{Carry}}}}
+
+\newcommand{\Xyz}[0]{\ensuremath{[X,y,z)}}
+
+%% used in the translation of \VTCZ
+%\newcommand{\prop}[2]{\ensuremath{\Vert#1\Vert[#2]}}
+%\newcommand{\prop}[2]{\ensuremath{\|#1\|[#2]}}
+\newcommand{\family}[1]{\ensuremath{\|#1\|}}
+%%\newcommand{\varphixYmn}[0]{\prop{\varphixY}{\mvec;\nvec}}
+
+\newcommand{\sFS}[0]{\ensuremath{\mathsf{FS}}}
+\newcommand{\sSS}[0]{\ensuremath{\mathsf{SS}}}
+
+%% for general quantifiers
+\def\rmQ{\mathrm{Q}}
+
+%%% for Turing machines
+%\newcommand{\blank}[0]{\ensuremath{\mathsf{b}\!\!\!/}}
+%\newcommand{\qa}[0]{\ensuremath{\mathsf{q}_{\mathit{accept}}}}
+%\newcommand{\qi}[0]{\ensuremath{\mathsf{q}_{\mathit{initial}}}}
+%\newcommand{\qr}[0]{\ensuremath{\mathsf{q}_{\mathit{reject}}}}
+%\newcommand{\qq}[0]{\ensuremath{\mathsf{q}_{\mathit{query}}}}
+%\newcommand{\qY}[0]{\ensuremath{\mathsf{q}_{\mathit{Yes}}}}
+%\newcommand{\qN}[0]{\ensuremath{\mathsf{q}_{\mathit{No}}}}
+%\newcommand{\sq}[0]{\ensuremath{\mathsf{q}}}
+%\newcommand{\sL}[0]{\ensuremath{\mathsf{L}}}
+%\newcommand{\sM}[0]{\ensuremath{\mathsf{M}}}
+%\newcommand{\sQ}[0]{\ensuremath{\mathsf{Q}}}
+%\newcommand{\sR}[0]{\ensuremath{\mathsf{R}}}
+%\newcommand{\sS}[0]{\ensuremath{\mathsf{S}}}
+%\newcommand{\sT}[0]{\ensuremath{\mathsf{T}}}
+%\newcommand{\sDel}[0]{\ensuremath{\mathsf{\Delta}}}
+%\newcommand{\sGam}[0]{\ensuremath{\mathsf{\Gamma}}}
+%\newcommand{\sSig}[0]{\ensuremath{\mathsf{\Sigma}}}
+%\newcommand{\ssig}[0]{\ensuremath{\mathsf{\sigma}}}
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% numerals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\numeral}[1]{\ensuremath{\underline{#1}}}
+\newcommand{\numn}[0]{\ensuremath{\underline{n}}}
+\newcommand{\numm}[0]{\ensuremath{\underline{m}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% arithmetical symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%% Arrows
+%\def\arrow{\longrightarrow}
+%\def\lrar{\leftrightarrow}
+%\newcommand{\lra}{\ensuremath{\leftrightarrow}}
+%\newcommand{\Longla}{\ensuremath{\Longleftarrow}}
+%\newcommand{\longra}{\ensuremath{\longrightarrow}}
+%\newcommand{\Longra}{\ensuremath{\Longrightarrow}}
+%\newcommand{\Lra}{\ensuremath{\Leftrightarrow}}
+%\newcommand{\la}{\ensuremath{\leftarrow}}
+%\newcommand{\ra}{\ensuremath{\rightarrow}}
+
+%%% Operators
+%\newcommand{\eqdef}{=_{\mathrm{def}}}
+%\newcommand{\eqsyn}{=_{\mathrm{syn}}}
+%%\newcommand{\plusbin}{+_{\mathrm{syn}}}
+%\newcommand{\plusbin}{+_2}
+%\newcommand{\timesbin}{\cdot_2}
+%\newcommand{\bin}[0]{\ensuremath{\mathit{bin}}}
+%\newcommand{\comma}{\ensuremath{\mbox{``},\mbox{''}}}
+%\newcommand{\leftpar}{\ensuremath{\mbox{``}(\mbox{''}}}
+%\newcommand{\rightpar}{\ensuremath{\mbox{``})\mbox{''}}}
+%\newcommand{\semicolon}{\ensuremath{\mbox{``};\mbox{''}}}
+%\newcommand{\andquote}{\ensuremath{\mbox{``}\wedge\mbox{''}}}
+%\newcommand{\orquote}{\ensuremath{\mbox{``}\vee\mbox{''}}}
+%
+%\newcommand{\queq}{\ensuremath{\stackrel{?}{=}}}
+
+
+%% ceiling & floor
+%\newcommand{\ceil}[1]{\ensuremath{\lceil{#1}\rceil}}
+%\newcommand{\floor}[1]{\ensuremath{\lfloor{#1}\rfloor}}
+%\newcommand{\halfof}[1]{\lfloor {\textstyle \frac{1}{2}} #1 \rfloor}
+%\newcommand{\fsqrt}[1]{\ensuremath{\floor{\sqrt{#1}}}}
+
+%% langle & rangle
+%\newcommand{\tuple}[1]{\ensuremath{\langle{#1}\rangle}}
+
+
+
+%% Threshold quantifier
+%\newcommand{\Mod}{\ensuremath{\mathsf{Mod}}}
+%\newcommand{\thq}{\ensuremath{\exists^{\ge}}}
+%\newcommand{\Th}{\ensuremath{\mathsf{Th}}}
+
+%%% dotminus: Copied from asl.cls
+%\newcommand\dotminus{\mathop{\mbox{$-^{\hspace{-.5em}\cdot}\,\,$}}}
+%
+%
+%
+%\newcommand{\N}{\ensuremath{\mathbb{N}}}
+%\newcommand{\stand}{\ensuremath{\underline{\mathbb{N}}}}
+%\newcommand{\standtwo}{\ensuremath{\underline{\mathbb{N}}_2}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% people names
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\Godel{G\"{o}del}
+\def\Gradel{Gr\"{a}del}
+\def\Konig{K\"{o}nig}
+\def\Krajicek{Kraj\'{\i}\v{c}ek}
+\def\Pudlak{Pudl\'{a}k}
+\def\Hajek{H\'{a}jek}
+\def\Nepom{Nepomnja\v{s}\v{c}ij}
+
+
+
+\newcommand {\numo}{\mbox{\textit{numones}}}
+
+
