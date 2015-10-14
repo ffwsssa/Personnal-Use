@@ -41,10 +41,11 @@
 
 \section{Main Goal}
 \begin{theorem}
-	For any formulae $F$ with $k$ variables and random formulas $f_1\. f_k$ depending on distinct $t$ variables, if $$F(f_1|_\rho\.f_k|_\rho)=F(U_k)$$, then 
-	$L(F(f_1\.f_k))\geq L(F)\cdot \min_i L(f_i)$.
+	For any formula $f$ on $k$ bits and PRG $G$ whose input is $T$ bits and output is $k$ bits, if $f( G(x|_\rho))=f(U_k)$, then we have 
+	$L(f (G))\geq (T/k)^2 L(f)$.
 \end{theorem}
-Note that, the Andreev function is the special case when $k=\log n$ and $f_j=\oplus_{i=1}^{n/\log n} x_{ji}$ where $j\in[k]$. 
+However, if $L(f)=k^d$, then we can only get $L(f(G))\geq T^2k^{d-2}=O(T^d) $. That is, this method cannot improve our conclusion. But it sheds light on how to composite functions to increase the formula complexity.   Furthermore, the Andreev function is the special case when $k=\log n$ and $T=n$ where $L(f)=\log n$. 
+
 
 Actually, there has been a similar conjecture: 
 \begin{conjecture}[KRW conjecture]
@@ -52,6 +53,20 @@ Let $f : \{0, 1\}^n\rightarrow \{0, 1\}$ and $g : \{0, 1\}^m \rightarrow \{0, 1\
 $$D(g \circ f) \simeq D(g) + D(f),$$
 where $D(f)$ denotes the depth of $f$ and $g\circ f$ represents the composition of functions, i.e. $g\circ f=g(f(\overline{x_1}),\ldots, f(\overline{x_m}))$, in which $\overline{x_i}$ is the vector of $n$ distinct variables. 
 \end{conjecture}
+
+Our first theorem shows that, 
+\begin{theorem}
+	For any formula $F$ with $k$ variables and  formula $G$ with $T$ variables, if $F\circ G(x|_\rho)=F(U_k)$ and $L(G)\leq T^2$, then the KRW conjecture is true.
+\end{theorem}
+\begin{q}
+	\begin{enumerate}
+		\item How about $L(G)\ge T^2$?  Can we develop new technique to prove it, instead of using the Hastad's shrinkage argument?
+		\item Maybe the PRG  can have more property, rather than only fixing the bit-fixing source.
+		\item Also, $F$ could have more properties, e.g. $F\in AC^0$. Then,  this could significantly decrease the of size input(seed) by using a $poly\log n$ independence. This part is covered in Section \ref{sec:AC0} 
+		\item What can be revealed for the formula from the random formula restriction?
+		\end{enumerate}
+		\end{q}
+\subsection{Related work}
 In the paper \cite{gavinsky2014toward},  Gavinsky, Meir, Weinstein and Avi Wigderson tried to use information-theoretic approach to prove it.  
 
 They have observed the Andreev functions is just 
@@ -63,21 +78,15 @@ when the parity function is “at the bottom” , one can easily apply random re
 to the function, but it is not clear how to do it when the parity function is “at the top”.
 
 
-\begin{q}
-	\begin{enumerate}
-		\item How to let PRG be involved?
-		\item what can be revealed for the formula from the random formula restriction?
-	\end{enumerate}
-\end{q}
-\begin{proof}
-First of all, we need th following property:
-\begin{enumerate}
-\item $F(f_1|_\rho\.f_n|_\rho)=F(x_1\.x_n)$
-\end{enumerate}
-That is 
-$$p^2L(F^*)\geq s(n)$$
-If $p=\log n/n$, then we know $L(F^*)\geq n$
-\end{proof}
+%\begin{proof}
+%First of all, we need th following property:
+%\begin{enumerate}
+%\item $F(f_1|_\rho\.f_n|_\rho)=F(x_1\.x_n)$
+%\end{enumerate}
+%That is 
+%$$p^2L(F^*)\geq s(n)$$
+%If $p=\log n/n$, then we know $L(F^*)\geq n$
+%\end{proof}
 
 In Andreev function, we only need $\log n$ variables left but now we need $n$. 
 
@@ -85,7 +94,8 @@ In Andreev function, we only need $\log n$ variables left but now we need $n$.
 \section{Another Way-- bound the variance of shrinkage}
 First of all, we know the shrinkage size $L(\phi|_{\rho})$ is a random variable with expected size $p^2L$ and has a high upper concentration result. We proceed to ask what about $Var[L(\phi|_\rho)]$
 
-\section{Using average-case hardness }
+\section{Assuming $F$ is AC0 and has average-case hardness }
+\label{sec:AC0} 
 By \cite{komargodski2013improved}, we know 
 \begin{theorem}
 There is an explicit Boolean function $h:\{0,1\}^n\rightarrow \{0,1\}$ and a constant $c\geq 8$ and a constant $c\geq 8$ such that for  any parameter $r$ such that $c\log(n)\leq r\le n^{1/3}$, any formula of size $\frac{n^3-o(1)}{r^2}$ computes $h$ correctly on a fraction of at most $1/2+2^{-\Omega(r)}$ of the inputs. 
@@ -116,10 +126,16 @@ Note that instead of fooling the formula on uniform random distribution, what we
 Concluding with the above two theorems, we get 
 $$|Pr_{x\sim U_n}[f(x)=1]-Pr_{y\in\{0,1\}^{poly\log n}}[f(G(y))=1]|\leq \delta+\epsilon.$$
 where $\epsilon, \delta$ could be both exponentially small. Then we hope to prove the following theorem, and we could get a much better lower bound than $\Omega(n^3)$.
+
+Then, by the paper \cite{trevisan2009regularity}, we want to show the indistinguishability can imply a good approximation for each $f$.
+
 \begin{theorem}[Main theorem to prove]
-If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{poly\log n}\rightarrow \{0,1\}$ such that $$|E[f(x)]-E[g(x)]|\leq 2^{-\Omega (r)},$$ and we know for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+2^{\Omega (r)};$$  then we know 
-$$Pr_x[g(x)=\Phi(x)]\leq 1-2^{\Omega(r)},$$
- which means $L(g)\geq s.$
+	If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{ n}\rightarrow \{0,1\}$ such that $f$ approximates $g$ within $1/2+\epsilon$, and for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+2^{-\Omega (r)};$$
+	then  we know
+	$$L(f)\leq L(g)+poly(\log 1/\epsilon)$$
+%If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{poly\log n}\rightarrow \{0,1\}$ such that $$|E[f(x)]-E[g(x)]|\leq 2^{-\Omega (r)},$$ and we know for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+2^{\Omega (r)};$$  then we know 
+%$$Pr_x[g(x)=\Phi(x)]\leq 1-2^{\Omega(r)},$$
+% which means $L(g)\geq s.$
  
 \end{theorem}
 \begin{proof}
