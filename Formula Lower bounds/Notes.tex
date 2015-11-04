@@ -1,3 +1,4 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{setspace}
@@ -26,6 +27,8 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{q}[theorem]{Question}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{ob}[theorem]{Observation}
 \newtheorem{conjecture}[theorem]{Conjecture}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,12 +41,26 @@
 
 \begin{document}
 		\maketitle 
+		
+\newcommand{\F}{\mathcal{F}}		
+\newcommand{\E}{\mathbb{E}}		
+\section{Generalize the PRG from shrinkage}	
+
+First of all, from the paper \cite{impagliazzo2012pseudorandomness}, we clean out two main lemmas by viewing the restriction as a special function. 
+\begin{lemma}
+Let $\F:\{0,1\}^n\rightarrow \{0,1\}$ be a class of de Morgan formulas with an associated size function $s:\F \rightarrow \mathbb{N}$. Then, there exists a function $h:\{0,1\}^{s^{2/3}}\rightarrow \{0,1\}^n$ such that $s^{1/3}-$ wise independent input $G_{s^{1/3}}$ could fool $f\circ h(\cdot )$ within $\epsilon$, that is 
+$$|\E[f\circ h(G_{s^{1/3}})]-\E[f\circ h(U_{s^{2/3}})]|\leq \epsilon$$
+\end{lemma}
+
+\begin{lemma}
+For sufficiently large $t$, there exists shrinkage functions $h_1\.h_t$ such that the distribution $\oplus_{i=1}^t f\circ h_i(U_{s^{2/3}})$ is $\epsilon-$close to the distribution $f(U_{n})$
+\end{lemma}
 
 \section{Main Goal}
-\begin{theorem}
+\begin{ob}
 	For any formula $f$ on $k$ bits and PRG $G$ whose input is $T$ bits and output is $k$ bits, if $f( G(x|_\rho))=f(U_k)$, then we have 
 	$L(f (G))\geq (T/k)^2 L(f)$.
-\end{theorem}
+\end{ob}
 However, if $L(f)=k^d$, then we can only get $L(f(G))\geq T^2k^{d-2}=O(T^d) $. That is, this method cannot improve our conclusion. But it sheds light on how to composite functions to increase the formula complexity.   Furthermore, the Andreev function is the special case when $k=\log n$ and $T=n$ where $L(f)=\log n$. 
 
 
@@ -62,7 +79,7 @@ Our first theorem shows that,
 	\begin{enumerate}
 		\item How about $L(G)\ge T^2$?  Can we develop new technique to prove it, instead of using the Hastad's shrinkage argument?
 		\item Maybe the PRG  can have more property, rather than only fixing the bit-fixing source.
-		\item Also, $F$ could have more properties, e.g. $F\in AC^0$. Then,  this could significantly decrease the of size input(seed) by using a $poly\log n$ independence. This part is covered in Section \ref{sec:AC0} 
+		\item Furthermore, to prove a better lower bound, we don't need such strong conjecture. If $F$ has more properties, e.g. $F\in AC^0$ and $F$ is average hardness, we may avoid the difficulty of proving this conjecture. This part is covered in Section \ref{sec:AC0}. I am not sure whether it is  workable? 
 		\item What can be revealed for the formula from the random formula restriction?
 		\end{enumerate}
 		\end{q}
@@ -94,6 +111,7 @@ In Andreev function, we only need $\log n$ variables left but now we need $n$.
 \section{Another Way-- bound the variance of shrinkage}
 First of all, we know the shrinkage size $L(\phi|_{\rho})$ is a random variable with expected size $p^2L$ and has a high upper concentration result. We proceed to ask what about $Var[L(\phi|_\rho)]$
 
+We can use some non-malleable code to construct a function with high variance after shrinkage. But it is a bit involved to bound the variance of shrinkage....
 \section{Assuming $F$ is AC0 and has average-case hardness }
 \label{sec:AC0} 
 By \cite{komargodski2013improved}, we know 
@@ -127,29 +145,50 @@ Concluding with the above two theorems, we get
 $$|Pr_{x\sim U_n}[f(x)=1]-Pr_{y\in\{0,1\}^{poly\log n}}[f(G(y))=1]|\leq \delta+\epsilon.$$
 where $\epsilon, \delta$ could be both exponentially small. Then we hope to prove the following theorem, and we could get a much better lower bound than $\Omega(n^3)$.
 
-Then, by the paper \cite{trevisan2009regularity}, we want to show the indistinguishability can imply a good approximation for each $f$.
+Then, by the paper \cite{trevisan2009regularity}, we want to show the indistinguishability can imply a good approximation for each $f$. If so, we can have the following property. 
 
-\begin{theorem}[Main theorem to prove]
-	If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{ n}\rightarrow \{0,1\}$ such that $f$ approximates $g$ within $1/2+\epsilon$, and for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+2^{-\Omega (r)};$$
+\begin{theorem}
+	If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{ n}\rightarrow \{0,1\}$ such that $f$ approximates $g$ within $1/2+\epsilon$, and for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+\epsilon;$$
 	then  we know
-	$$L(f)\leq L(g)+poly(\log 1/\epsilon)$$
+	$$L(g)\geq s$$
 %If there are two functions $f:\{0,1\}^n\rightarrow \{0,1\}$ and $g:\{0,1\}^{poly\log n}\rightarrow \{0,1\}$ such that $$|E[f(x)]-E[g(x)]|\leq 2^{-\Omega (r)},$$ and we know for any $s$-sized formula $\Phi$, $$Pr_x[f(x)=\Phi(x)]\leq 1/2+2^{\Omega (r)};$$  then we know 
 %$$Pr_x[g(x)=\Phi(x)]\leq 1-2^{\Omega(r)},$$
 % which means $L(g)\geq s.$
- 
 \end{theorem}
+
+
+%\begin{proof}
+%Assume by contradiction, there is a $s$-sized formula $\Phi$ computing $g$. Then based on $\Phi$, we can construct a formula $\Psi$ in the same size computing $f$. 
+%
+%That is, first of all, divided the input into two parts: $S_1=\{x|\Phi(x)=f(x)\}$ and 
+%$S_2=\{x|\Phi(x)\neq f(x)\}$. If there exists a large subset $S^*\subset S_2$ which can be efficiently computed by formula such that $|S_1|+|S^*|> 2^n(1/2+2^{-Omega(r)})$, then it is contradicting with the average-case hardness of $f$. 
+%
+%First of all, we bound the size of $|S_1|$ by using the first equation. 
+%
+%Second, we show how to compute the majority of given set efficiently. 
+%
+%By the above those things, we can get our desired conclusion. 
+%\end{proof}
+
+\subsection{Approximate Boolean function by using PRG}
+\begin{definition}
+For two functions $f, g : \{0, 1\}^l \rightarrow \{0, 1\}$ and a number $0 \le \rho \leq 1$ we say that $g$
+approximates $f$ within a factor $\rho$ if $f$ and $g$ agree on at least a fraction $\rho$ of their
+domain, i.e.$$ Pr[f(x) = g(x)] \geq  \rho$$
+\end{definition}
+
+\begin{theorem}[Main Theorem To prove]
+If there is a PRG $G:\{0,1\}^k\rightarrow \{0,1\}^n$ that $\delta$-fools  a class of Boolean functions $C$ with $n$ variables, then for each function $f\in C$, there exists a function $h_f:\{0,1\}^n\rightarrow \{0,1\}^k$  such that $L(h_f)=o(L(f))$ and $f(G(h_f(\cdot )))$ approximates $f$ within $1/2+\Omega(\delta)$.
+\end{theorem}
+
 \begin{proof}
-Assume by contradiction, there is a $s$-sized formula $\Phi$ computing $g$. Then based on $\Phi$, we can construct a formula $\Psi$ in the same size computing $f$. 
+That is, we  need to bound 
+$$Pr[h_f(x)\in (f(G))^{-1}(1)|f(x)=1]+Pr[h_f(x)\in (f(G))^{-1}(0)|f(x)=0].$$
 
-That is, first of all, divided the input into two parts: $S_1=\{x|\Phi(x)=f(x)\}$ and 
-$S_2=\{x|\Phi(x)\neq f(x)\}$. If there exists a large subset $S^*\subset S_2$ which can be efficiently computed by formula such that $|S_1|+|S^*|> 2^n(1/2+2^{-Omega(r)})$, then it is contradicting with the average-case hardness of $f$. 
-
-First of all, we bound the size of $|S_1|$ by using the first equation. 
-
-Second, we show how to compute the majority of given set efficiently. 
-
-By the above those things, we can get our desired conclusion. 
+And what we have is a precise estimate of $E[f(x))]$ by using PRG on $E[f(G(x))]$. Could fourier transform help us here?  Since we know the first coefficient in the fourier transfrom of the function $f$. 
 \end{proof}
+
+
 \bibliographystyle{plain}
 \bibliography{Notes}
 \end{document} 
