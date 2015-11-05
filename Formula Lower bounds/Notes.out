@@ -1,6 +1,8 @@
-\BOOKMARK [1][-]{section.1}{Generalize the PRG from shrinkage}{}% 1
-\BOOKMARK [1][-]{section.2}{Main Goal}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Related work}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{Another Way\205 bound the variance of shrinkage}{}% 4
-\BOOKMARK [1][-]{section.4}{Assuming F is AC0 and has average-case hardness }{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Approximate Boolean function by using PRG}{section.4}% 6
+\BOOKMARK [1][-]{section.1}{Instance compression for formula lower bounds}{}% 1
+\BOOKMARK [2][-]{subsubsection.1.0.1}{Negative results for Instance compression}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Generalize the PRG from shrinkage}{}% 3
+\BOOKMARK [1][-]{section.3}{Main Goal}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Related work}{section.3}% 5
+\BOOKMARK [1][-]{section.4}{Another Way\205 bound the variance of shrinkage}{}% 6
+\BOOKMARK [1][-]{section.5}{Assuming F is AC0 and has average-case hardness }{}% 7
+\BOOKMARK [2][-]{subsection.5.1}{Approximate Boolean function by using PRG}{section.5}% 8

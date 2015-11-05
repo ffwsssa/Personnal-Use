@@ -44,17 +44,54 @@
 		
 \newcommand{\F}{\mathcal{F}}		
 \newcommand{\E}{\mathbb{E}}		
+\renewcommand{\a}{\alpha}		
+
+\section{Instance compression for formula lower bounds}
+
+\begin{theorem}[Main Theorem To prove]
+For a boolean formula $f$ with $n$ variables, there exists a function $h_f:\{0,1\}^n\rightarrow \{0,1\}^{n^\a}$ where $\a \leq 1$  and a set $A\subset \{0,1\}^{n^\a}$ such that $L(h_f)=o(L(f)^{1-\a})$ and with probability $1/2+\Omega(\delta)$, $$h_f(x)\in A \leftrightarrow f(x)=1.$$
+\end{theorem}
+Denote $I_A$ is the indicator function for the set $A$, that is $I_A(x)=1\leftrightarrow x\in A$. Then the function $I_A(h_f(\cdot))$ $(1/2+\Omega(\delta))$-agrees with $f(\cdot)$. If $f$ is average hard for $n^3$-sized formula and $k=o(n)$, then $$L(I_A)\geq L(f)/L(h_f)=n^{3\alpha}/o(1)>>n^{3\a}$$. Note that $I_A$ depends on $n^{\a}$ variables, which means the size of $I_A$ is larger than the cube of its size. 
+
+
+\subsubsection{Negative results for Instance compression}
+\begin{theorem}[\cite{fortnow2008infeasibility}]
+If there is a set $A$ and function $h$ such
+that given $m$ Boolean formula $\phi_1, \ldots, \phi_m$ where each $\phi_i$ has length at most $n$, $h$ has the following
+properties:
+\begin{enumerate}
+\item  $h$ is computable in time polynomial in m and n,
+\item  $h(\phi_1, \ldots, \phi_m) \in A$ if and only if at least one of the $\phi_i$ is satisfiable, and
+\item  $|h(\phi_1, \ldots, \phi_m)|$ is bounded by a polynomial in n,
+\end{enumerate}
+then  $NP$ is contained in $coNP/poly$.
+\end{theorem}
+
+To apply the above theorem to our setting, we need transfer the satisfiable problem to computable problem... 
+
+\begin{theorem}[Probabilistic version \cite{fortnow2008infeasibility}]
+If OR-SAT is probabilistically compressible with randomness complexity $O(log(n))$,
+then PH collapses.
+\end{theorem}
+
 \section{Generalize the PRG from shrinkage}	
 
 First of all, from the paper \cite{impagliazzo2012pseudorandomness}, we clean out two main lemmas by viewing the restriction as a special function. 
-\begin{lemma}
-Let $\F:\{0,1\}^n\rightarrow \{0,1\}$ be a class of de Morgan formulas with an associated size function $s:\F \rightarrow \mathbb{N}$. Then, there exists a function $h:\{0,1\}^{s^{2/3}}\rightarrow \{0,1\}^n$ such that $s^{1/3}-$ wise independent input $G_{s^{1/3}}$ could fool $f\circ h(\cdot )$ within $\epsilon$, that is 
-$$|\E[f\circ h(G_{s^{1/3}})]-\E[f\circ h(U_{s^{2/3}})]|\leq \epsilon$$
+\begin{lemma}\label{main lemma for PRG from shrinkage}
+Let $\F:\{0,1\}^n\rightarrow \{0,1\}$ be a class of de Morgan formulas with an associated size function $s:\F \rightarrow \mathbb{N}$. Then, there exists a function $h:\{0,1\}^{s^{2/3}}\rightarrow \{0,1\}^n$ such that $s^{1/3}-$ wise independent input $G_{s^{1/3}}$ could $\epsilon-$fool $f\circ h(\cdot )$, that is 
+$$|\E[f\circ h(G_{s^{1/3}})]-\E[f\circ h(U_{s^{2/3}})]|\leq \epsilon.$$
 \end{lemma}
 
 \begin{lemma}
-For sufficiently large $t$, there exists shrinkage functions $h_1\.h_t$ such that the distribution $\oplus_{i=1}^t f\circ h_i(U_{s^{2/3}})$ is $\epsilon-$close to the distribution $f(U_{n})$
+For sufficiently large $t$, there exists shrinkage functions $h_1\.h_t$ such that the distribution $\oplus_{i=1}^t f\circ h_i(U_{s^{2/3}})$ is $\epsilon-$close to the distribution $f(U_{n}).$
 \end{lemma}
+
+In the Lemma \ref{main lemma for PRG from shrinkage}, view $h(G_{s^{1/3}})$ and $h(U_{s^{2/3}})$ as two different $n$-bits codes $C_1,C_2$. Then Lemma \ref{main lemma for PRG from shrinkage} shows that no $n^3$-sized de Morgan formula $f$ can distinguish $C_1,C_2$ within $\epsilon$.
+
+\begin{q}
+For any constant $\epsilon<0$, are there two codes $C_1,C_2\subset \{0,1\}^n$ such that $|C_1|=o(|C_2|)$ and no $n^4$-sized formula $f$ could distinguish them within error $\epsilon$, namely 
+$$|E_{x\in C_1}[f(x)]-E_{x\in C_2}[f(x)]|\leq \epsilon$$
+\end{q}
 
 \section{Main Goal}
 \begin{ob}
