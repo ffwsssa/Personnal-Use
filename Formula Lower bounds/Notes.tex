@@ -41,11 +41,35 @@
 
 \begin{document}
 		\maketitle 
-		
+
 \newcommand{\F}{\mathcal{F}}		
 \newcommand{\E}{\mathbb{E}}		
 \renewcommand{\a}{\alpha}		
 
+
+\section{$\sqrt{n}$-wise independence fools $n^{0.51}$-size formula}
+
+
+In the \cite{tal2014shrinkage}, the key point is each formula $f$ can be approximated by a polynomial with degree $O(\sqrt{L(f)})$. That means, each formula's $k$-order  Fourier mass is exponentially smaller than $k/\sqrt{L(f)}$. That means, when $L(f)$ is smaller, the quicker high-order mass of $f$ collapses.  That would imply a good shrinkage result, namely the degree is exponentially hard to maintain in the shrinkage. And the degree bounds the formula size. 
+
+So the remaining stuff is to understand why formula can be simulated by a polynomial with square root size. It is important to observe for our part. 
+
+The formal details is as follows: 
+Small formulae have exponentially small Fourier tails. Note that , $deg(f)=O(\sqrt{L(F)})$. And we know, if $f$ can be $\epsilon$-approximated by a $d$-degree polynomial, then 
+$$\sum_{S:|S|\geq d}\hat f(S)^2\leq \epsilon$$
+
+
+Furthermore, we know 
+\begin{lemma}[\cite{tal2014shrinkage}]
+	If for all $t$, $f$ has at most $2^{-t}$ of the mass above level $mt$, then under a $p$-restriction we know 
+	$$Pr_{\rho\sim R_p}[deg(f|_{\rho}= d)\leq (4pm)^d].$$
+	If $p\sim 1/m$, we get a error probability exponentially on $d$.
+\end{lemma}
+
+\begin{lemma}[Switching lemma]
+If $f$ can be computed by a $w$-width DNF, then
+$$\forall d: Pr_{\rho\sim R_p}[\text{decision tree complexity of}(f|_\rho)\geq d]\leq (5pw)^d $$
+\end{lemma}
 \section{Instance compression for formula lower bounds}
 
 \begin{theorem}[Main Theorem To prove]
